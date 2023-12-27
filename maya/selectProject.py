@@ -17,7 +17,14 @@ class SelectProjectUI(QtWidgets.QMainWindow):
         else:
             cls.qmwInstance.raise_()
             cls.qmwInstance.activateWindow()
-    
+
+    def showEvent(self, event):
+        """
+        This event is called every time the window is shown. 
+        Use it to refresh the categories list.
+        """
+        self._clear()  # Clear the current state.
+        super(SelectProjectUI, self).showEvent(event)
 
     def __init__(self, parent=getMayaMainWindow()):
         super(SelectProjectUI, self).__init__(parent)
@@ -58,7 +65,7 @@ class SelectProjectUI(QtWidgets.QMainWindow):
         self.setButton.clicked.connect(self.onSetClicked)
         self.categoryList.itemClicked.connect(self.onCategorySelected)
         self.assetList.itemClicked.connect(self.onAssetSelected)
-        self._getCategories()
+        
 
 
     def onCategorySelected(self, item):

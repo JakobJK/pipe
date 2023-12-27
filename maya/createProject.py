@@ -18,7 +18,14 @@ class CreateProjectUI(QtWidgets.QMainWindow):
         else:
             cls.qmwInstance.raise_()
             cls.qmwInstance.activateWindow()
-    
+
+    def showEvent(self, event):
+        """
+        This event is called every time the window is shown. 
+        Use it to refresh the categories list.
+        """
+        self.populateCategories()  # Refresh categories.
+        super(CreateProjectUI, self).showEvent(event)
 
     def __init__(self, parent=getMayaMainWindow()):
         super(CreateProjectUI, self).__init__(parent)
@@ -61,7 +68,6 @@ class CreateProjectUI(QtWidgets.QMainWindow):
         self.layout.addLayout(self.columnLayout)
         self.layout.addWidget(self.createAssetButton)
 
-        self.populateCategories()
         
         self.categoryDropdown.currentIndexChanged.connect(self.isValid)
         self.categoryInput.textChanged.connect(self.isValid)
@@ -78,6 +84,7 @@ class CreateProjectUI(QtWidgets.QMainWindow):
 
 
     def populateCategories(self):
+        self.categoryDropdown.clear()
         assetsPath = Path(ASSETS_ROOT)
         categories = [d for d in assetsPath.iterdir() if d.is_dir()]
         for category in categories:
@@ -112,5 +119,4 @@ class CreateProjectUI(QtWidgets.QMainWindow):
     def _clear(self):
         self.assetInput.setText("")
         self.categoryInput.setText("")
-        self.populateCategories()
 
