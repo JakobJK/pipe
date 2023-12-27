@@ -11,6 +11,11 @@ def getCurrentProject():
         return projName
     return None
 
+def resetBrowserPrefs():
+    optionsVar = cmds.optionVar(list=True)
+    for var in optionsVar:
+        if var.startswith("browserLocation"):
+            cmds.optionVar(remove=var)
 
 def getMayaMainWindow():
     mainWindowPtr = omui.MQtUtil.mainWindow()

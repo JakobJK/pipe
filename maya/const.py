@@ -1,3 +1,4 @@
+PROJECT_NAME = "Chicken"
 PROJECT_ROOT = "D:/chicken/"
 ASSETS_ROOT = "D:/chicken/assets/"
 GAME_ASSETS_ROOT = "D:/chicken/godot/assets/"
