@@ -58,7 +58,6 @@ def importObj():
     file = _getScratchDir() / SCRATCH_FILE
     all_nodes = cmds.file(str(file), i=True, type="OBJ", rnn=True, ra=True, mnc=True, ns=":", options="mo=1;lo=0", pr=True)
     dagNodes = [node for node in all_nodes if cmds.nodeType(node) == "transform" and cmds.listRelatives(node, type="mesh", shapes=True)]
-
     for node in dagNodes:
         cmds.sets(node, e=True, forceElement='initialShadingGroup')
         cmds.polySoftEdge(node, a=180, ch=True)
@@ -73,3 +72,4 @@ def exportObj():
         force=True, 
         type="OBJexport", 
         es=True)
+    cmds.inViewMessage(amg="Obj Exported", pos='midCenter', fade=True)
