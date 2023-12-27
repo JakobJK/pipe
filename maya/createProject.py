@@ -3,7 +3,7 @@ from pathlib import Path
 from PySide2 import QtWidgets, QtCore, QtGui
 from maya import cmds
 from util import getMayaMainWindow, getDefaultWorkspaceFile, resetBrowserPrefs
-from const import ASSETS_ROOT
+from const import ASSETS_ROOT, PROJECT_NAME
 
 
 class CreateProjectUI(QtWidgets.QMainWindow):
@@ -23,21 +23,42 @@ class CreateProjectUI(QtWidgets.QMainWindow):
     def __init__(self, parent=getMayaMainWindow()):
         super(CreateProjectUI, self).__init__(parent)
         
+        self.setWindowTitle(f"{PROJECT_NAME} - Create Asset")
         self.mainWidget = QtWidgets.QWidget()
+        self.mainWidget.setMinimumWidth(500)
         self.setCentralWidget(self.mainWidget)
         self.layout = QtWidgets.QVBoxLayout(self.mainWidget)
 
-        self.categoryLabel = QtWidgets.QLabel("Category:")
+        self.columnLayout = QtWidgets.QHBoxLayout()
+        self.labelLayout = QtWidgets.QVBoxLayout()
+        self.controlsLayout = QtWidgets.QVBoxLayout()
+
+        #Labels
+        self.categoryLabel = QtWidgets.QLabel("Existing Categories:")
+        self.categoryLabel.setAlignment(QtCore.Qt.AlignRight)
+        self.newCategoryLabel = QtWidgets.QLabel("New Category:")
+        self.newCategoryLabel.setAlignment(QtCore.Qt.AlignRight)
+        self.assetLabel = QtWidgets.QLabel("New Asset Name:")
+        self.assetLabel.setAlignment(QtCore.Qt.AlignRight)
+        #Controls
         self.categoryInput = QtWidgets.QLineEdit()
         self.categoryDropdown = QtWidgets.QComboBox()
         self.assetInput = QtWidgets.QLineEdit()
+
         self.createAssetButton = QtWidgets.QPushButton("Create Asset")
         self.createAssetButton.setEnabled(False)
         
-        self.layout.addWidget(self.categoryLabel)
-        self.layout.addWidget(self.categoryInput)
-        self.layout.addWidget(self.categoryDropdown)
-        self.layout.addWidget(self.assetInput)
+        self.labelLayout.addWidget(self.categoryLabel)
+        self.labelLayout.addWidget(self.newCategoryLabel)
+        self.labelLayout.addWidget(self.assetLabel)
+
+        self.controlsLayout.addWidget(self.categoryDropdown)
+        self.controlsLayout.addWidget(self.categoryInput)
+        self.controlsLayout.addWidget(self.assetInput)
+
+        self.columnLayout.addLayout(self.labelLayout)
+        self.columnLayout.addLayout(self.controlsLayout)
+        self.layout.addLayout(self.columnLayout)
         self.layout.addWidget(self.createAssetButton)
 
         self.populateCategories()
@@ -61,7 +82,6 @@ class CreateProjectUI(QtWidgets.QMainWindow):
         categories = [d for d in assetsPath.iterdir() if d.is_dir()]
         for category in categories:
             self.categoryDropdown.addItem(category.name)
-        self.categoryDropdown.addItem("")
 
     def createMayaProject(self):
         try:
@@ -85,6 +105,12 @@ class CreateProjectUI(QtWidgets.QMainWindow):
             resetBrowserPrefs()
             cmds.inViewMessage(amg=f"Asset has been set & created:\n {category} - {assetName}", pos='midCenter', fade=True)
             self.close()
+            self._clear()
         except:
             cmds.error("Failed to create new Asset")
         
+    def _clear(self):
+        self.assetInput.setText("")
+        self.categoryInput.setText("")
+        self.populateCategories()
+

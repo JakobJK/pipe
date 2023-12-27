@@ -3,12 +3,11 @@ from pathlib import Path
 from PySide2 import QtWidgets, QtCore, QtGui
 from maya import cmds
 from util import getMayaMainWindow, getDefaultWorkspaceFile, resetBrowserPrefs
-from const import ASSETS_ROOT
+from const import ASSETS_ROOT, PROJECT_NAME
 
 
 class SelectProjectUI(QtWidgets.QMainWindow):
     qmwInstance = None
-    
     @classmethod
     def show_UI(cls):
         if not cls.qmwInstance:
@@ -25,8 +24,10 @@ class SelectProjectUI(QtWidgets.QMainWindow):
         self.currentCategory = ""
         self.currentAsset = ""
 
-        self.setWindowTitle("Select Project")
+        self.setWindowTitle(f"{PROJECT_NAME} - Select Asset")
         self.mainWidget = QtWidgets.QWidget(self)
+        self.mainWidget.setMinimumWidth(600)
+
         self.setCentralWidget(self.mainWidget)
         self.mainLayout = QtWidgets.QVBoxLayout(self.mainWidget)
         self.columnsLayout = QtWidgets.QHBoxLayout(self.mainWidget)
@@ -48,7 +49,7 @@ class SelectProjectUI(QtWidgets.QMainWindow):
         self.columnsLayout.addLayout(self.assetColumn)
 
         # Set Button
-        self.setButton = QtWidgets.QPushButton("Set Asset")
+        self.setButton = QtWidgets.QPushButton("Select Asset")
         self.setButton.setEnabled(False)
         self.mainLayout.addLayout(self.columnsLayout)
         self.mainLayout.addWidget(self.setButton)
@@ -90,4 +91,13 @@ class SelectProjectUI(QtWidgets.QMainWindow):
         resetBrowserPrefs()
         cmds.inViewMessage(amg=f"Asset has been set:\n {self.currentCategory} - {self.currentAsset}", pos='midCenter', fade=True)
         self.close()
+        self._clear()
+    
+    def _clear(self):
+        self.currentCategory = ""
+        self.currentAsset = ""
+        self.assetList.clear()
+        self.categoryList.clear()
+        self._getCategories()
+
 
