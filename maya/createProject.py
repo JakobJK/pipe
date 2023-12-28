@@ -24,13 +24,13 @@ class CreateProjectUI(QtWidgets.QMainWindow):
         This event is called every time the window is shown. 
         Use it to refresh the categories list.
         """
-        self.populateCategories()  # Refresh categories.
+        self.populateCategories()
         super(CreateProjectUI, self).showEvent(event)
 
     def __init__(self, parent=getMayaMainWindow()):
         super(CreateProjectUI, self).__init__(parent)
         
-        self.setWindowTitle(f"{PROJECT_NAME} - Create Asset")
+        self.setWindowTitle(f"{PROJECT_NAME} - Create Workspace")
         self.mainWidget = QtWidgets.QWidget()
         self.mainWidget.setMinimumWidth(500)
         self.setCentralWidget(self.mainWidget)
@@ -47,6 +47,7 @@ class CreateProjectUI(QtWidgets.QMainWindow):
         self.newCategoryLabel.setAlignment(QtCore.Qt.AlignRight)
         self.assetLabel = QtWidgets.QLabel("New Asset Name:")
         self.assetLabel.setAlignment(QtCore.Qt.AlignRight)
+
         #Controls
         self.categoryInput = QtWidgets.QLineEdit()
         self.categoryDropdown = QtWidgets.QComboBox()
@@ -110,7 +111,7 @@ class CreateProjectUI(QtWidgets.QMainWindow):
 
             cmds.workspace(str(projectPath), openWorkspace=True)
             resetBrowserPrefs()
-            cmds.inViewMessage(amg=f"Asset has been set & created:\n {category} - {assetName}", pos='midCenter', fade=True)
+            cmds.inViewMessage(amg=f"Workspace has been set & created:\n {category} - {assetName}", pos='midCenter', fade=True)
             setContextDisplay(category, assetName)
             self.close()
             self._clear()

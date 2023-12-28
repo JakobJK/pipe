@@ -23,7 +23,7 @@ class SelectProjectUI(QtWidgets.QMainWindow):
         This event is called every time the window is shown. 
         Use it to refresh the categories list.
         """
-        self._clear()  # Clear the current state.
+        self._clear()
         super(SelectProjectUI, self).showEvent(event)
 
     def __init__(self, parent=getMayaMainWindow()):
@@ -31,7 +31,7 @@ class SelectProjectUI(QtWidgets.QMainWindow):
         self.currentCategory = ""
         self.currentAsset = ""
 
-        self.setWindowTitle(f"{PROJECT_NAME} - Select Asset")
+        self.setWindowTitle(f"{PROJECT_NAME} - Set Workspace")
         self.mainWidget = QtWidgets.QWidget(self)
         self.mainWidget.setMinimumWidth(600)
 
@@ -96,7 +96,7 @@ class SelectProjectUI(QtWidgets.QMainWindow):
         assetPath = Path(ASSETS_ROOT) / self.currentCategory / self.currentAsset
         cmds.workspace(str(assetPath), openWorkspace=True)
         resetBrowserPrefs()
-        cmds.inViewMessage(amg=f"Asset has been set:\n {self.currentCategory} - {self.currentAsset}", pos='midCenter', fade=True)
+        cmds.inViewMessage(amg=f"Workspace has been set:\n {self.currentCategory} - {self.currentAsset}", pos='midCenter', fade=True)
         setContextDisplay(self.currentCategory, self.currentAsset)
         self.close()
         self._clear()
