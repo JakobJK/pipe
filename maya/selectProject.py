@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from PySide2 import QtWidgets, QtCore, QtGui
 from maya import cmds
-from util import getMayaMainWindow, getDefaultWorkspaceFile, resetBrowserPrefs
+from util import getMayaMainWindow, getDefaultWorkspaceFile, resetBrowserPrefs, setContextDisplay
 from const import ASSETS_ROOT, PROJECT_NAME
 
 
@@ -97,6 +97,7 @@ class SelectProjectUI(QtWidgets.QMainWindow):
         cmds.workspace(str(assetPath), openWorkspace=True)
         resetBrowserPrefs()
         cmds.inViewMessage(amg=f"Asset has been set:\n {self.currentCategory} - {self.currentAsset}", pos='midCenter', fade=True)
+        setContextDisplay(self.currentCategory, self.currentAsset)
         self.close()
         self._clear()
     

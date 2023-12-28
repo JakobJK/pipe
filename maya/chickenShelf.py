@@ -25,13 +25,13 @@ def buildShelf():
 
     try:
         import creaseEdges
-        selectCreaseBtn = cmds.shelfButton(parent=PROJECT_NAME, label='modelChecker', sourceType="python", command=lambda *args: creaseEdges.selectCrease(), image='UVEditorEdge.png', noDefaultPopup=True)
+        selectCreaseBtn = cmds.shelfButton(parent=PROJECT_NAME, label='Select Crease', sourceType="python", command=lambda *args: creaseEdges.selectCrease(), image='UVEditorEdge.png', noDefaultPopup=True)
         selectCreasePopup = cmds.popupMenu(selectCreaseBtn)
         cmds.menuItem(label="Select Crease - 1", parent=selectCreasePopup, command=lambda _: creaseEdges.selectCrease(1))
         cmds.menuItem(label="Select Crease - 2", parent=selectCreasePopup, command=lambda _: creaseEdges.selectCrease(2))
         cmds.menuItem(label="Select Crease - 3", parent=selectCreasePopup, command=lambda _: creaseEdges.selectCrease(3))
         
-        setCreaseBtn = cmds.shelfButton(parent=PROJECT_NAME, label='modelChecker', sourceType="python", command=lambda *args: creaseEdges.setCrease(3), image='UVTkEdge.png', noDefaultPopup=True)        
+        setCreaseBtn = cmds.shelfButton(parent=PROJECT_NAME, label='Set Crease', sourceType="python", command=lambda *args: creaseEdges.setCrease(3), image='UVTkEdge.png', noDefaultPopup=True)        
         setCreasePopup = cmds.popupMenu(setCreaseBtn)
         cmds.menuItem(label="Set Crease - 1", parent=setCreasePopup, command=lambda _: creaseEdges.setCrease(1))
         cmds.menuItem(label="Set Crease - 2", parent=setCreasePopup, command=lambda _: creaseEdges.setCrease(2))

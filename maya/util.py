@@ -2,7 +2,17 @@ from shiboken2 import wrapInstance
 from PySide2 import QtWidgets
 import maya.OpenMayaUI as omui
 import maya.cmds as cmds
-from const import ASSETS_ROOT
+from const import ASSETS_ROOT, PROJECT_NAME
+
+def setContextDisplay(category, asset):
+    "WIP - This needs color n' spice and everything nice."
+    menuName = f"{PROJECT_NAME}Context"
+    prefix = f"[ {PROJECT_NAME} - "
+    suffix = " ]"
+    if cmds.menu(menuName, exists=True):
+        cmds.deleteUI(menuName)
+    contextMenu = cmds.menu(menuName, enable=True, label=f"{prefix}{category} - {asset}{suffix}", parent="MayaWindow")
+
 
 def getCurrentProject():
     curProjectPath = cmds.workspace(query=True, fullName=True)
