@@ -61,6 +61,7 @@ def buildShelf():
         cmds.shelfButton(parent=PROJECT_NAME, label='Export Low', sourceType="python", command=scratch.exportLow, image='out_polyCube.png', noDefaultPopup=True)
         cmds.shelfButton(parent=PROJECT_NAME, label='Export High', sourceType="python", command=scratch.exportHigh, image='out_polySphere.png', noDefaultPopup=True)
         cmds.shelfButton(parent=PROJECT_NAME, label='Export Game Model', sourceType="python", command=scratch.exportGameModel, image='game_exporter.png', noDefaultPopup=True)
-        cmds.tabLayout("ShelfLayout", edit=True, selectTab=PROJECT_NAME)
     except:
         pass
+    
+    cmds.tabLayout("ShelfLayout", edit=True, selectTab=PROJECT_NAME)
