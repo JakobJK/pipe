@@ -18,7 +18,10 @@ def getCurrentProject():
     curProjectPath = cmds.workspace(query=True, fullName=True)
     if curProjectPath.startswith(ASSETS_ROOT):
         projName = curProjectPath.split(ASSETS_ROOT)[-1]
-        return projName
+        result = projName.split('/')
+        if len(result) > 2:
+            return None
+        return result
     return None
 
 def resetBrowserPrefs():

@@ -16,16 +16,17 @@ def _exportBakeMesh(lod):
 
     curProject = getCurrentProject()
     if curProject:
-        assetsPath = Path(ASSETS_ROOT) / curProject
+        category, asset = curProject
+        assetsPath = Path(ASSETS_ROOT) / category / asset
         marmosetPath = assetsPath / "marmoset/" 
         marmosetPath.mkdir(parents=True, exist_ok=True)
-        file = marmosetPath / f"{curProject}_{lod}.obj"
+        file = marmosetPath / f"{asset}_{lod}.obj"
         cmds.file(str(file),
             options="groups=1;ptgroups=1;materials=0;smoothing=1;normals=1",
             force=True, 
             type="OBJexport",
             es=True)
-        cmds.inViewMessage(amg=f"Yay! Asset exported:\n {curProject} - {lod}", pos='midCenter', fade=True)
+        cmds.inViewMessage(amg=f"Yay! Asset exported:\n {asset} - {lod}", pos='midCenter', fade=True)
     else:
         cmds.warning(f"{lod} did not get exported!")
 
@@ -40,16 +41,17 @@ def exportLow():
 def exportGameModel():
     curProject = getCurrentProject()
     if curProject:
+        category, asset = curProject
         gameAssetsPath = Path(GAME_ASSETS_ROOT)
-        projectAssetsPath = gameAssetsPath / curProject
+        projectAssetsPath = gameAssetsPath / category / asset
         projectAssetsPath.mkdir(parents=True, exist_ok=True)
-        file = projectAssetsPath / f"{curProject}_mdl.obj"
+        file = projectAssetsPath / f"{asset}_mdl.obj"
         cmds.file(str(file), 
             options="groups=1;ptgroups=1;materials=0;smoothing=1;normals=1",
             force=True, 
             type="OBJexport", 
             es=True)
-        cmds.inViewMessage(amg=f"Game model exported:\n {curProject}", pos='midCenter', fade=True)
+        cmds.inViewMessage(amg=f"Game model exported:\n {asset}", pos='midCenter', fade=True)
     else:
         cmds.warning("High did not get exported!")
 
