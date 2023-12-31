@@ -3,7 +3,6 @@ import maya.app .renderSetup.model.renderSetup as renderSetup
 import maya.cmds as cmds
 import os
 
-
 def createMooseModel(name="MooseModelShader"):
     if cmds.objExists(name):
         return name
